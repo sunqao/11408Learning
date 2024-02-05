@@ -82,7 +82,13 @@ Create(n):表示构造n个节点的可行解
 
 不过这里直接记住算法即可，不求掌握证明
 
-## 例子
+另外`Huffman`树的分支其实可以随机指定节点，不用一定要保证所有分叉的左分支是0，右分支是1，只需保证某个分叉的所有分支的编码互不相同即可，这样就可以保证一定是前缀编码
+
+可以用反证法证明一定是前缀编码：
+
+假设某个字符`a`的编码是字符`b`的编码的前缀，假设`a = 00, b = 001`，由于每一个分叉的分支对应的编码都是不一样的，因此从编码的第一位开始可以唯一确定分支，`a = 00`就说明经过00分支后此处就是叶结点，但是b = 001, 就说明00处的节点还有分支，矛盾，因此一定是前缀编码
+
+## 一个例子
 
 ![image-20240204202248784](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240204202248784.png)
 
@@ -131,7 +137,76 @@ int main(){
 
 ## Huffman树的变形`k`叉树编码
 
+看这个例子`(NOI2015)`：
+
+![image-20240205194258350](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240205194258350.png)
 
 
 
+![image-20240205194321085](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240205194321085.png)
 
+**解题思路：**
+
+类似于Huffman树，我们需要构造一颗k叉树，构造方式与Huffman完全一样，每次合并`k`个节点，在分支上用`0 ~ k － 1`进行编码，这里不再赘述，不过需要注意的是可能总的节点个数不满足`n = z * k + k - 1`，那最后一次合并的时候就不能保证有`k`个分支，这个时候我们需要添加`k - 1 - n % k  `个权值为`0`的节点，添加节点后构造的树的带权路径长度与原来的节点构造的树的带权路径长度完全相同，原来的节点构造的树添加这些节点之后可变成添加节点构成的树，添加了这些节点构造的树去掉这些节点之后就变成了原来的节点构造的树，因此两种不同节点数量构造的可行解集是完全等价的并且带权路径长度也是一一对应相等，我们只需找到添加节点之后的最优解（最小带权路径长度的树），也就找到了原来的最优解
+
+另外我们需要注意的是最优解并不是唯一的，比如下面这种情况，最小的两个权值有多个的话不同的合并最后的结果叶结点的编码是不一样的，但是带权路径长度是一样的：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/Screenshot_2024-02-05-19-46-10-965_com.jideos.jno.png" alt="Screenshot_2024-02-05-19-46-10-965_com.jideos.jno" style="zoom:50%;" />
+
+这道题目的第二问就是这样，要找到不同最优解中的最长编码最短的长度，也就是找到不同最优解中树的高度最小的解，这里需要再使用一次贪心，我们需要将高度更小的节点安排到最底层，也就是先合并高度更小的节点
+
+对于中间合并的某次过程，若有两个高度不同但权值相同的节点`a, b`，两者的高度分别是`ha, hb`，且`ha < hb`，不管怎么合并，由于要保证最优解，所以此中间过程形成的树的形态是不变的如下图所示：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/Screenshot_2024-02-05-19-58-55-589_com.jideos.jno.png" alt="Screenshot_2024-02-05-19-58-55-589_com.jideos.jno" style="zoom:50%;" />
+
+也就是此中间过程树的最底层的高度在最后的结果的中是一个定值，假设为`h`，若将`a`安排在最底层，`b`安排在别处假设`b`所处的位置的高度为`h'`，那么最终的最优解的树的高度就是`height1 = max(h + ha, h' + hb, H)`，`H`是其他的节点形成的树的高度；假设`b`安排在最底层，那么最优解的树的高度就是`height2 = max(h + hb, h' + ba, H)`，由于`h > h'`，所以`height2 >= height1`，因此对于中间过程的合并，对于权值相等的两个点**合并高度更小的点是当前过程所有合并方案中得到最终结果的树的高度最小的**
+
+所以我们在保证得到最优解的情况下尽可能合并高度更小的点即可，因此排序的时候需要进行双关键字段排序，最后得到的树一定是最优方案中高度最小的树
+
+**代码实现：**
+
+```cpp
+#include<iostream>
+#include<queue>
+#include<algorithm>
+using namespace std;
+
+typedef long long LL;
+typedef pair<LL, int> PLI;
+
+
+
+int main(){
+    LL n, k;
+    cin >> n >> k;
+    priority_queue<PLI, vector<PLI>, greater<PLI>> heap;//定义一个堆
+    while(n --){
+        LL num;
+        cin >> num;
+        heap.push({num, 1});
+    }
+    
+    while((heap.size() - 1) % (k - 1)) heap.push({0, 1});
+    
+    LL res = 0;
+    //int height = 0;
+    while(heap.size() > 1){
+        LL s = 0;
+        int height = 0;//这里必须设置为0，因为新加入节点的高度是合并节点的高度取大的结果
+        for(int i = 1; i <= k; i ++){
+            auto a = heap.top();
+            s += a.first;
+            height = max(height, a.second);
+            heap.pop();
+        }
+        heap.push({s, height + 1});//加入新合并的高度和权值
+        res += s;
+    }
+    
+    cout << res << endl << heap.top().second - 1 << endl;//输出结果，总的合并代价和串的长度，也就是高度减一
+    
+    return 0;
+}
+```
+
+不过这题只需要掌握`k`叉树的Huffman思想即可，第二问不需要掌握，证明也不需要掌握
