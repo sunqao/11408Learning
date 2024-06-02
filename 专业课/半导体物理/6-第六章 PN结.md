@@ -1,6 +1,6 @@
 # 6-第六章 PN结
 
-## 6.1 PN结及其能带图
+## 6.1 平衡pn结特性
 
 ### 6.1.1 基本结构
 
@@ -268,3 +268,52 @@ $$
 >
 > 在空间电荷区忽略了电子和空穴的存在就好像它们全部消失了，因此就称为耗尽层近似
 
+## 6.2 pn结的电流电压特性
+
+### 6.2.1 pn结中的电场和电势分布
+
+我们认为电场只存在于空间电荷区的， 空间电荷区以外（耗尽层）是没有电场的
+
+我们需要解出电场和电势的函数，怎么解呢，用泊松方程，电位移矢量的散度等于电荷体密度即$\nabla \vec{D} = \rho$，一维条件下有：
+$$
+\frac{dD}{dx} = \rho
+$$
+D是电位移矢量$D = \epsilon E$，因此有：
+$$
+\frac{dE}{dx} = \frac{\rho}{\epsilon}
+$$
+而电场强度有$E = \frac{-dV}{dx}$，因此得到：
+$$
+-\frac{d^2V}{dx^2} = \frac{dE}{dx} = \frac{\rho}{\epsilon}
+$$
+电势的二阶微分等于电荷浓度除以结点常数，我们想要电场分布，那就必须知道电荷体密度$\rho$，在解泊松方程的前提必须要知道$\rho(x)$，根据上文，电离区的杂质浓度是个常数NA, ND，所以这里解方程就及其简单了
+
+假设在突变的p+-n结中，其杂质浓度图如下所示：
+
+![image-20240529185837063](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240529185837063.png)
+
+电荷体密度有$\rho(x) = q(N_D - N_A + p - n)$，根据耗尽层近似$n = p = 0$
+
+因此在p型区的杂质电荷密度有：$\rho(x) = -qN_A(-x_p \le x \le 0)$（杂质电离留下负电中心），在n型区的杂质电荷密度$\rho(x) = qN_D 0 (\le x \le x_n)$​（杂质电离留下正电中心）
+
+根据泊松方程$\frac{d^2V}{dx^2} = -\frac{\rho(x)}{\epsilon_r \epsilon_0}$得到：
+$$
+E(x) = -\frac{dV}{dx} = -\int \frac{d^2V}{dx^2}dx
+$$
+根据边界条件$x = x_n, x = -x_p 处E = 0$，因此得到：
+
+当$-x_p \le x \le 0$​时
+$$
+E(x) = \int \frac{\rho(x)}{\epsilon_r \epsilon_0}dx = -\int\frac{qN_A}{\epsilon_r \epsilon_0}dx  = -\frac{qN_A}{\epsilon_r \epsilon_0}x + C \rightarrow^{代入边界条件} E_p(x) = -\frac{qN_A}{\epsilon_r \epsilon_0}(x + x_p)
+$$
+当$0 \le x \le x_n$时
+$$
+E_n(x) = \frac{qN_D}{\epsilon_r \epsilon_0}(x_n - x)
+$$
+在pn结的交界处电场相等，达到最大值：
+$$
+E_m = -\frac{qN_Ax_p}{\epsilon_r \epsilon_0} = -\frac{qN_Dx_n}{\epsilon_r \epsilon_0}
+$$
+那么可以得到电场的分布图像如下所示：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240602114736857.png" alt="image-20240602114736857" style="zoom:67%;" />
