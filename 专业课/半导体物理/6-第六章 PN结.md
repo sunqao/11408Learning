@@ -272,6 +272,8 @@ $$
 
 ### 6.2.1 pn结中的电场和电势分布
 
+#### 电场分布
+
 我们认为电场只存在于空间电荷区的， 空间电荷区以外（耗尽层）是没有电场的
 
 我们需要解出电场和电势的函数，怎么解呢，用泊松方程，电位移矢量的散度等于电荷体密度即$\nabla \vec{D} = \rho$，一维条件下有：
@@ -288,7 +290,7 @@ $$
 $$
 电势的二阶微分等于电荷浓度除以结点常数，我们想要电场分布，那就必须知道电荷体密度$\rho$，在解泊松方程的前提必须要知道$\rho(x)$，根据上文，电离区的杂质浓度是个常数NA, ND，所以这里解方程就及其简单了
 
-假设在突变的p+-n结中，其杂质浓度图如下所示：
+假设在突变的p+/n结中（p型区的掺杂NA >> ND），其杂质浓度图如下所示：
 
 ![image-20240529185837063](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240529185837063.png)
 
@@ -308,7 +310,7 @@ E(x) = \int \frac{\rho(x)}{\epsilon_r \epsilon_0}dx = -\int\frac{qN_A}{\epsilon_
 $$
 当$0 \le x \le x_n$时
 $$
-E_n(x) = \frac{qN_D}{\epsilon_r \epsilon_0}(x_n - x)
+E_n(x) = -\frac{qN_D}{\epsilon_r \epsilon_0}(x_n - x)
 $$
 在pn结的交界处电场相等，达到最大值：
 $$
@@ -317,3 +319,196 @@ $$
 那么可以得到电场的分布图像如下所示：
 
 <img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240602114736857.png" alt="image-20240602114736857" style="zoom:67%;" />
+
+根据$E_m = -\frac{qN_Ax_p}{\epsilon_r \epsilon_0} = -\frac{qN_Dx_n}{\epsilon_r \epsilon_0}$，我们得到：
+$$
+qN_Ax_pS = qN_Dx_nS
+$$
+上式中的S是pn结的截面积，这就说明p型区和n型区的总电荷量是相等的，因此我们得到：
+$$
+\frac{x_n}{x_p}=\frac{N_A}{N_D}
+$$
+对于p+n结，由于NA >> ND，所以得到：
+$$
+x_n >> x_p
+$$
+这就说明p型区和n型区并不是对称的，耗尽区总是在轻掺杂的一边，浓度低的必须要很厚才能达到和浓度高的相等的电荷量！并且抗压最多的也在低掺杂区，pn结如果坏了，坏的最多的也是在轻掺杂区
+
+当然还有一个方法来求解电势的分布，使用高斯定理：**电场强度在一封闭曲面上的面积分与封闭曲面所包围的电荷量成正比**，什么意思呢？
+
+假如我们有一个带电体，导体带电，只有表面有电，我想要求这个带电体形成的电场强度，假设表面电荷的面密度为$\sigma$，那么我们可以做一个正方体如下图所示蓝色，这个正方体的前后左右都没有电场穿过，下面因为是在导体中，因此没有电场，所以只有上面有电场穿过：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603163427372.png" alt="image-20240603163427372" style="zoom:67%;" />
+
+那么我们可以得到：
+$$
+ES = \frac{\sigma S}{\epsilon}
+$$
+等式左侧就是电通量，也是E对S的面积分，这里的正比系数就是介电常数的倒数，也就是$E = \frac{\sigma}{\epsilon}$，这样就非常简单地求出电场强度了
+
+同理我们看pn结中的电场强度，假设是在n型区，我们同样做一个长方体：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603163940943.png" alt="image-20240603163940943" style="zoom:67%;" />
+
+假设pn结的横截面积是S，上下前后都没有电场穿过，只有左侧面S有电场穿过，因此我们得到：
+$$
+ES = \frac{qN_DS(x_n - x)}{\epsilon_r \epsilon_0}
+$$
+得到：
+$$
+E =  \frac{qN_D(x_n - x)}{\epsilon_r \epsilon_0}
+$$
+带个方向就是负值了，这不就是n型区的电场强度公式么：$E =  -\frac{qN_D(x_n - x)}{\epsilon_r \epsilon_0}$，这里如果硬要较真负号的话可以建系
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603171922741.png" alt="image-20240603171922741" style="zoom: 50%;" />
+
+此时$\vec{E} = (0, -E, 0)$，那么$\iint \vec{E}d\vec{S} = -\iint -Edzdy = ES = \frac{qN_DS(x_n - x)}{\epsilon_r \epsilon_0}$，这样解出来的E的大小就是正的了，此时$\vec{E} = -E\vec{i}$
+
+简化为一维就是$E =  -\frac{qN_D(x_n - x)}{\epsilon_r \epsilon_0}$​
+
+#### 电势分布
+
+由电场分布：
+
+当$-x_p \le x \le 0$​时
+$$
+E_p(x) = -\frac{qN_A}{\epsilon_r \epsilon_0}(x + x_p)
+$$
+当$0 \le x \le x_n$时
+$$
+E_n(x) = -\frac{qN_D}{\epsilon_r \epsilon_0}(x_n - x)
+$$
+电势分布为$V(x) = -\int E(x)dx$，边界条件为：$x = -x_p, V = 0, x  = x_n , V = V_D$所以：
+
+当$-x_p \le x \le 0$时
+$$
+V(x) = \int \frac{qN_A}{\epsilon_r \epsilon_0}(x + x_p)dx = \frac{qN_A}{2 \epsilon_r \epsilon_0}(x + x_p)^2 + C(C = 0)
+$$
+当$0 \le x \le x_n$时
+
+
+$$
+V(x) = V_D - \frac{qN_D}{2\epsilon_r \epsilon_0}(x_n - x)^2
+$$
+所以电势的图像如下所示，其实就是两个抛物线组合起来：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603172653936.png" alt="image-20240603172653936" style="zoom:67%;" />
+
+根据上面两个电势的关系，在x = 0处有$V_p(x) = V_n(x)$，从而得到：
+$$
+V_D = \frac{qN_D}{2\epsilon_r \epsilon_0}x_n^2 + \frac{qN_A}{2\epsilon_r \epsilon_0}x_p^2
+$$
+那么**势垒宽度**有$X_D = x_p + x_n$，并且有$\frac{x_n}{x_p}=\frac{N_A}{N_D}$，因此得到：
+$$
+\frac{x_p}{x_n + x_p} = \frac{N_D}{N_A + N_D}
+$$
+于是得到：
+$$
+x_n = \frac{N_A}{N_A + N_D}X_D, x_p = \frac{N_D}{N_A + N_D}X_D
+$$
+所以有：
+$$
+V_D = \frac{q}{2\epsilon_r \epsilon_0}\frac{N_AN_D}{N_A + N_D}X_D^2
+$$
+所以得到势垒宽度有：
+$$
+X_D = \sqrt{\frac{2 \epsilon_r \epsilon_0(N_A + N_D)V_D}{qN_AN_D}} = \sqrt{\frac{2 \epsilon_r \epsilon_0V_D}{qN_B}}
+$$
+上式中的$N_B = \frac{N_AN_D}{N_A + N_D}$称为有效掺杂浓度，当掺杂浓度确定以后，VD, NA, ND都确定了，那么势垒宽度也就确定了，因为是p+n结，所以NA >> ND，因此有：
+$$
+X_D = \sqrt{\frac{2 \epsilon_r \epsilon_0V_D}{qN_D}} \approx x_n
+$$
+同理，如果是n+p结，那么有：
+$$
+X_D = \sqrt{\frac{2 \epsilon_r \epsilon_0V_D}{qN_A}} \approx x_p
+$$
+
+#### 线性缓变结的电场电势分布
+
+如果对于线性缓变结，它的杂质浓度分布不是突变的，如果用ND - NA表示杂质分布的话如下图所示：
+
+![image-20240603174614861](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603174614861.png)
+
+根据耗尽层近似，因此它的电荷分布就是：
+$$
+\rho(x) = q(N_D - N_A) = q\alpha x
+$$
+上式中的$\alpha$是杂质浓度梯度
+
+根据泊松方程$-\frac{d^2V}{dx^2} = \frac{dE}{dx} = \frac{\rho}{\epsilon} = \frac{q\alpha x}{\epsilon_r \epsilon_0}$，边界条件为$x = \pm \frac{X_D}{2}, E(x) = 0$，得到电场分布：
+$$
+E(x) = -\int \frac{d^2V}{dx^2}dx = \frac{q\alpha}{2\epsilon_r \epsilon_0}[x^2 - (\frac{X_D}{2})^2]
+$$
+因此得到电场的图像为（是一个二次函数）：
+
+![image-20240603175236584](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603175236584.png)
+
+同理得到电势分布：
+$$
+V(x) = -\int E(x)dx = \frac{q\alpha}{2\epsilon_r \epsilon_0}[(\frac{X_D}{2})^2x - \frac{1}{3}x^3]
+$$
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603175257608.png" alt="image-20240603175257608" style="zoom:67%;" />
+
+由于$V(\frac{X_D}{2}) - V(-\frac{X_D}{2}) = V_D$，所以得到耗尽层宽度为：
+$$
+X_D = (\frac{12 \epsilon_r \epsilon_0 V_D}{q\alpha})^{\frac{1}{3}}
+$$
+
+### 6.2.2 非平衡p - n结的能带图
+
+非平衡，那就是加上一个电压，大部分电压都降落在势垒区，可以近似认为所有的电压都降落在势垒区
+
+这时外加电压有两种情况
+
+**（1）对于外加电压形成的电场与原来的自建场方向相反的时候（正电压，电场从p指向n，p区接正电压）**
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603190453141.png" alt="image-20240603190453141" style="zoom:67%;" />
+
+
+
+自建场被减弱，所以总的势垒降低了，因此电子需要爬坡的电压降低了，平衡区的导带底相比于之前没有下降那么狠了也就是$q(V_D - V_f)$，n型区的整体相对于平衡的来讲需要整体向上平移一段距离
+
+由于自建场的作用是抑制载流子的扩散，那么我们加的电场与其相反，于是载流子就扩散更多了，p型区的空穴扩散更多到n型区，n型区的电子扩散更多到p型区，在平衡的时候扩散的载流子通过自建场漂移拉回去，总体没有电流，但是自建场被削弱之后扩散的载流子拉不回去了
+
+**因此从p区扩散到n区的一部分空穴就注入到了n型区成为了n型区的非平衡少数载流子**
+
+**以及从n区扩散到p区的一部分电子就注入到了p型区成为了p型区的非平衡少数载流子**
+
+这些非平衡少子会一边扩散，一边复合，假设非平衡空穴扩散的长度是Lp，非平衡电子扩散的长度是Ln，扩散长度会形成扩散区：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603192412612.png" alt="image-20240603192412612" style="zoom:67%;" />
+
+在正向偏压下，PN结的N区和P区都有非平衡少数载流子的注入。在非平衡少数载流子存在的区域内，必须用电子的准费米能级$E_{Fn}$和空穴的准费米能级$E_{Fp}$取代原来平衡时的统一费米能级$E_F$
+
+以n型区为例，根据准费米能级的定义：
+
+导带电子浓度：$n = n_0 + \Delta n = N_cexp(-\frac{E_C - E_F^n}{k_0T})$
+
+价带空穴浓度：$p = p_0 + \Delta p = N_v exp(\frac{E_v - E_F^p}{k_0T})$
+
+在下图nn’位置出现非平横少子空穴（根据第五章的分析，空穴对应的费米能级应该在电子的下面）因为n型区的电子浓度占多数，所以可以忽略电子浓度的变化，电子对应的准费米能级可以看作不变；而价带空穴由于注入所以其浓度变化很大，并且其费米能级位置随着空穴浓度变化而变化，由于空穴一边扩散一边复合，因此其浓度是减小的，根据上面的公式，空穴对应的准费米能级应该是慢慢增大，一直到$\Delta p =\Delta n= 0$​，此时电子空穴对应的费米能级再次重合，而根据载流子的稳态扩散方程，此时的准费米能级应该是成直线增大
+
+由于耗尽层的载流子的浓度很小，根据耗尽层近似，可以认为没有载流子，因为扩散区比势垒区大，因此可以认为此处没有复合产生，所以不管是空穴还是电子对应的费米能级都不发生变化
+
+同理在pp’位置电子向p区进行扩散的过程发生类似的变化
+
+由于加上了一个与自建场相反的电压
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603200527120.png" alt="image-20240603200527120" style="zoom:67%;" />
+
+
+
+
+
+
+
+
+
+**（2）对于外加电压形成电场与原来的自建场的方向相同的时候（负电压，电场从n指向p，p区接负电压）**
+
+在平衡的时候自建场已经是可以做到p型区扩散多少空穴到n区，自建场给漂移多少空穴从n区到p区回去了，此时n区没有多少空穴，同理p区没有多少电子了
+
+再加上一个与自建场方向相同的电场，其促进p型区的电子向n型区漂移，促进n型区的空穴向p型区漂移，在只有自建场的时候空间电荷区已经没什么了，哪怕再加上一个电场也没有什么可以漂移形成电流了，所以加上一个与自建场方向相同的电场之后pn结中的电流并没有什么变化
+
+
+
