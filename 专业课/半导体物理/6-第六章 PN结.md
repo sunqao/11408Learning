@@ -939,3 +939,88 @@ $$
 
 在反偏时应该加上产生电流，并且以产生电流为主，根据上文中反向饱和电流与产生电流与比值有$\frac{n_i}{N_D}$这一项，ni是10的10次方级别，而ND是10的15次方级别，所以产生电流比反向饱和电流大得多，真实的漏电流比理想的高几乎1000倍！
 
+## 6.3 PN结的电容
+
+真正的器件在工作的时候不是直流的，而是交流的，pn结有两种电容，一种是势垒电容，一种是扩散电容，在这里我们研究的是交变电容，即单位电压变化引起的电荷量的变化：
+$$
+C = \frac{dQ}{dV}
+$$
+
+### 6.3.1 势垒电容（一般是反偏下）
+
+当pn结反偏的时候，根据上文中的耗尽层近似，不管是不是平衡状态，空间电荷区可以认为没有载流子，只留下对应的电离杂质中心，得到的耗尽层长度为：
+$$
+X_D = \sqrt{\frac{2 \epsilon_r \epsilon_0(N_A + N_D)(V_D- V)}{qN_AN_D}} = \sqrt{\frac{2 \epsilon_r \epsilon_0(V_D- V)}{qN_B}}
+$$
+上式跟VD有关，当电压正偏时削弱了VD，此时耗尽层减小，当电压反偏时增大了VD，此时耗尽层增大，上式中电压项跟在上文中推导的时候有些不一样，上文是在平衡时推导的，此时V = 0
+
+注意当正向偏压的时候，电压增大耗尽层变大，电压减小，耗尽层变小，这样就带来了电荷量的变化，并且pn结两边的电荷量的增量应该相等（因为原来就是相等的，反偏时也应该保证两边的电荷量相等），这就像两个极板在充放电一样，这个就是势垒电容：
+
+![image-20240612175143336](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612175143336.png)
+
+下面来定量求电容，我们这里以突变结为例，根据上文中推导电场分布时候的思路，在n型区的正电荷的体密度是qND，因此总的电荷量有：
+$$
+Q = AqN_Ax_p = AqN_Dx_n
+$$
+上式中的A可看作是横截面积，根据下图：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612193856608.png" alt="image-20240612193856608" style="zoom:50%;" />
+
+又根据耗尽层近似得到的耗尽层长度的公式：$X_D = \sqrt{\frac{2 \epsilon_r \epsilon_0(N_A + N_D)(V_D- V)}{qN_AN_D}} $，我们可以得到：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612194004785.png" alt="image-20240612194004785" style="zoom: 33%;" />
+
+从而得到电容：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612194330322.png" alt="image-20240612194330322" style="zoom:50%;" />
+
+化简得到：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612194351977.png" alt="image-20240612194351977" style="zoom:50%;" />
+
+同时将$N_B = \frac{N_AN_D}{N_A + N_D}$带入可以得到突变结的势垒电容：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612194537962.png" alt="image-20240612194537962" style="zoom:50%;" />
+
+可以看到势垒电容的平方倒数与电压成线性关系，画在图中就是如下所示，其在x轴的截距就是pn结的势垒电压：
+
+![image-20240612194732425](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612194732425.png)
+
+一般正向偏压就不讲电容了
+
+如果对于线性缓变结，它的杂质浓度分布不是突变的，如果用ND - NA表示杂质分布的话如下图所示：
+
+![image-20240603174614861](https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240603174614861.png)
+
+根据耗尽层近似，因此它的电荷分布就是：
+$$
+\rho(x) = q(N_D - N_A) = q\alpha x
+$$
+上式中的$\alpha$是杂质浓度梯度，上图中的右半边NA = 0，ND呈线性增加，因此一边的电荷量为：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612195348182.png" alt="image-20240612195348182" style="zoom:50%;" />
+
+此时求得的XD和Q的表达式为：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612195434891.png" alt="image-20240612195434891" style="zoom:50%;" />
+
+因此得到此时的势垒电容为：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612195459055.png" alt="image-20240612195459055" style="zoom:50%;" />
+
+注意上式中的XD就是开三次方的式子了，因此此时电压与电容的三次方的倒数成线性关系：
+
+<img src="https://typora-1310242472.cos.ap-nanjing.myqcloud.com/typora_img/image-20240612195615762.png" alt="image-20240612195615762" style="zoom:50%;" />
+
+
+
+
+
+
+
+### 6.3.2 扩散电容（一般是正偏下）
+
+在正向偏压注入的时候，严格来讲空穴和电子的数量一定时相等的（因为要维持电中性的条件，一般来讲就是来一个空穴就吸引一个电子），因此在扩散区里面其实是正负电荷相等的（尽管没有复合完），那也就是，电压高一点，空穴就多一点，同时电子也多一点，电压低一点，空穴少一点，电子也降了下来，那电容不就是这个么，单位电压变化引起的电荷量的变化，并且扩散区的电容有两个，两个扩散电容都依赖于外加电压V
+
+并且这两个电容从电学上讲是并联的关系，而且在正向偏置的情况下有：$p(x_n) = p_{n0}\exp(\frac{qV}{k_0T})$，这就说明正向偏压下的扩散电容非常大
+
